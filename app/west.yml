@@ -1,0 +1,27 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+manifest:
+  projects:
+    - name: zephyr
+      url: https://github.com/zephyrproject-rtos/zephyr.git
+      revision: zephyr-v3.3.0
+      clone-depth: 1
+      import:
+        name-blocklist:
+          - ci-tools
+          - hal_altera
+          - hal_cypress
+          - hal_infineon
+          - hal_microchip
+          - hal_nxp
+          - hal_openisa
+          - hal_silabs
+          - loramac-node
+          - mcuboot
+          - mcumgr
+          - net-tools
+          - openthread
+          - edtt
+          - trusted-firmware-m
+          - sof

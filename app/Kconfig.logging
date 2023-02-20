@@ -1,0 +1,20 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+menu "Logging"
+
+config ZPROBE_UART_LOGGING
+	bool "Logging via UART"
+	select LOG
+	select SERIAL
+	select CONSOLE
+	select UART_CONSOLE
+
+if ZPROBE_UART_LOGGING
+
+config ZPROBE_LOG_LEVEL
+	default 4
+
+endif # ZPROBE_UART_LOGGING
+
+endmenu
