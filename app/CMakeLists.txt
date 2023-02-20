@@ -10,3 +10,6 @@ find_package(Zephyr REQUIRED HINTS ../zephyr)
 project(zprobe)
 
 target_sources(app PRIVATE src/main.c)
+target_sources(app PRIVATE src/usb.c)
+
+target_sources_ifdef(CONFIG_ZPROBE_CDC_ACM app PRIVATE src/usb_cdc_acm.c)

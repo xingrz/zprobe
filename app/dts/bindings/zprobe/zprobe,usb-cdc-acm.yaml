@@ -1,0 +1,15 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+description: Bridge between UART and USB CDC-ACM
+
+compatible: "zprobe,usb-cdc-acm"
+
+properties:
+  peer-0:
+    type: phandle
+    required: true
+
+  peer-1:
+    type: phandle
+    required: true

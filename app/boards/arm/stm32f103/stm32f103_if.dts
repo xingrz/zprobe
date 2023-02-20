@@ -14,3 +14,21 @@
 		zephyr,code-partition = &code_partition;
 	};
 };
+
+&usb {
+	cdc0: cdc_acm_uart-0 {
+		compatible = "zephyr,cdc-acm-uart";
+	};
+};
+
+&usart2 {
+	status = "okay";
+};
+
+/ {
+	usb_cdc_acm-0 {
+		compatible = "zprobe,usb-cdc-acm";
+		peer-0 = <&cdc0>;
+		peer-1 = <&usart2>;
+	};
+};

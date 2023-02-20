@@ -1,0 +1,26 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+menu "USB CDC-ACM"
+
+DT_COMPAT_ZPROBE_USB_CDC_ACM := zprobe,usb-cdc-acm
+
+config ZPROBE_CDC_ACM
+	bool "Bridge between UART and USB CDC-ACM"
+	default $(dt_compat_enabled,$(DT_COMPAT_ZPROBE_USB_CDC_ACM))
+	depends on USB_DEVICE_STACK
+	depends on DT_HAS_ZEPHYR_CDC_ACM_UART_ENABLED
+	select SERIAL
+	select USB_CDC_ACM
+	select UART_LINE_CTRL
+	select CDC_ACM_DTE_RATE_CALLBACK_SUPPORT
+
+if ZPROBE_CDC_ACM
+
+config ZPROBE_CDC_ACM_RING_BUF_SIZE
+	int
+	default 128
+
+endif # ZPROBE_CDC_ACM
+
+endmenu

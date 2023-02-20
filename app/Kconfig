@@ -6,6 +6,7 @@ mainmenu "Zprobe"
 menu "Zprobe"
 
 rsource "Kconfig.logging"
+rsource "Kconfig.cdc_acm"
 
 module = ZPROBE
 module-str = zprobe
