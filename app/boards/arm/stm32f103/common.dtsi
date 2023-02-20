@@ -1,0 +1,80 @@
+/*
+ * Copyright (c) 2023 XiNGRZ
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <st/f1/stm32f103Xb.dtsi>
+#include <st/f1/stm32f103c(8-b)tx-pinctrl.dtsi>
+
+/ {
+	chosen {
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,console = &usart3;
+		zephyr,usb-device = &usb;
+	};
+};
+
+&clk_hse {
+	clock-frequency = <DT_FREQ_M(8)>;
+	status = "okay";
+};
+
+&pll {
+	mul = <9>;
+	clocks = <&clk_hse>;
+	status = "okay";
+};
+
+&rcc {
+	clocks = <&pll>;
+	clock-frequency = <DT_FREQ_M(72)>;
+	ahb-prescaler = <1>;
+	apb1-prescaler = <2>;
+	apb2-prescaler = <1>;
+};
+
+&usb {
+	pinctrl-0 = <&usb_dm_pa11 &usb_dp_pa12>;
+	pinctrl-names = "default";
+	status = "okay";
+
+	vbus-gpios = <&gpioa 12 GPIO_ACTIVE_LOW>;
+};
+
+&usart1 {
+	pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
+	pinctrl-names = "default";
+	current-speed = <115200>;
+};
+
+&usart2 {
+	pinctrl-0 = <&usart2_tx_pa2 &usart2_rx_pa3>;
+	pinctrl-names = "default";
+	current-speed = <115200>;
+};
+
+&usart3 {
+	pinctrl-0 = <&usart3_tx_pb10 &usart3_rx_pb11>;
+	pinctrl-names = "default";
+	status = "okay";
+	current-speed = <115200>;
+};
+
+&flash0 {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		bootloader_partition: partition@0 {
+			label = "bootloader";
+			reg = <0x00000000 DT_SIZE_K(48)>;
+		};
+
+		code_partition: partition@C000 {
+			label = "code_partition";
+			reg = <0x0000C000 DT_SIZE_K(80)>;
+		};
+	};
+};

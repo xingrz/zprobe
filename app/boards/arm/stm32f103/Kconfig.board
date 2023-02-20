@@ -1,0 +1,10 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_STM32F103_BL
+	bool "Generic STM32F103 bootloader"
+	depends on SOC_STM32F103XB
+
+config BOARD_STM32F103_IF
+	bool "Generic STM32F103 interface"
+	depends on SOC_STM32F103XB

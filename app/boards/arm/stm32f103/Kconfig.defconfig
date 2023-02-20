@@ -1,0 +1,16 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_STM32F103_BL
+
+config BOARD
+	default "stm32f103_bl"
+
+endif # BOARD_STM32F103_BL
+
+if BOARD_STM32F103_IF
+
+config BOARD
+	default "stm32f103_if"
+
+endif # BOARD_STM32F103_IF

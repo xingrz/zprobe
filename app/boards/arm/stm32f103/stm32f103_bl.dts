@@ -1,0 +1,16 @@
+/*
+ * Copyright (c) 2023 XiNGRZ
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include "common.dtsi"
+
+/ {
+	model = "STM32F103 Bootloader";
+	compatible = "zprobe,stm32f103_bl", "st,stm32f103";
+
+	chosen {
+		zephyr,code-partition = &bootloader_partition;
+	};
+};
