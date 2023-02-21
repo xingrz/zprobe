@@ -22,6 +22,8 @@ rsource "Kconfig.logging"
 
 if ZPROBE_INTERFACE
 rsource "Kconfig.cdc_acm"
+rsource "Kconfig.cmsis_dap"
+rsource "cmsis_dap/Kconfig"
 endif # ZPROBE_INTERFACE
 
 module = ZPROBE

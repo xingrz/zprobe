@@ -12,6 +12,7 @@
 
 	chosen {
 		zephyr,code-partition = &code_partition;
+		zprobe,swdio = &swdio;
 	};
 };
 
@@ -30,5 +31,14 @@
 		compatible = "zprobe,usb-cdc-acm";
 		peer-0 = <&cdc0>;
 		peer-1 = <&usart2>;
+	};
+};
+
+/ {
+	swdio: swdio {
+		compatible = "zprobe,swdio-bitbang";
+		swclk-tck-gpios = <&gpiob 13 GPIO_PULL_UP>;
+		swdio-out-gpios = <&gpiob 14 GPIO_PULL_UP>;
+		swdio-in-gpios = <&gpiob 14 GPIO_PULL_UP>;
 	};
 };

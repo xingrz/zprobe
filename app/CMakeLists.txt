@@ -15,3 +15,8 @@ target_sources_ifdef(CONFIG_ZPROBE_INTERFACE app PRIVATE src/main_if.c)
 target_sources(app PRIVATE src/usb_status.c)
 
 target_sources_ifdef(CONFIG_ZPROBE_CDC_ACM app PRIVATE src/usb_cdc_acm.c)
+target_sources_ifdef(CONFIG_ZPROBE_CMSIS_DAP_V2 app PRIVATE src/usb_cmsis_dap_v2.c)
+
+target_sources_ifdef(CONFIG_CMSIS_DAP app PRIVATE src/cmsis_dap.c)
+target_link_libraries_ifdef(CONFIG_CMSIS_DAP app PRIVATE cmsis_dap)
+add_subdirectory_ifdef(CONFIG_CMSIS_DAP cmsis_dap)

@@ -1,0 +1,10 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+DT_COMPAT_ZPROBE_SWDIO_BITBANG := zprobe,swdio-bitbang
+
+config SWDIO_BITBANG
+	bool "A bit-bang driver to generate SWD sequence"
+	default $(dt_compat_enabled,$(DT_COMPAT_ZPROBE_SWDIO_BITBANG))
+	select HAS_SWDIO
+	select GPIO

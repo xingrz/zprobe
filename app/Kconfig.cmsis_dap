@@ -1,0 +1,16 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+menu "USB CMSIS-DAP"
+
+config ZPROBE_CMSIS_DAP_V2
+	bool "USB interface for CMSIS-DAP v2"
+	depends on USB_DEVICE_STACK
+	default y if HAS_SWDIO
+	select CMSIS_DAP
+
+module = ZPROBE_CMSIS_DAP
+module-str = zprobe_cmsis_dap
+source "subsys/logging/Kconfig.template.log_config"
+
+endmenu

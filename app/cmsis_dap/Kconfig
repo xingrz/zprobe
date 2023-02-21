@@ -1,0 +1,21 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+menu "CMSIS-DAP"
+
+config CMSIS_DAP
+	bool "ARM CMSIS Version 5"
+
+if CMSIS_DAP
+
+config CMSIS_DAP_SWD
+	bool "Enable Serial Wire Debug (SWD) communication mode"
+	default y
+
+module = CMSIS_DAP
+module-str = cmsis_dap
+source "subsys/logging/Kconfig.template.log_config"
+
+endif # CMSIS_DAP
+
+endmenu

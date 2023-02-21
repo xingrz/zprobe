@@ -1,0 +1,11 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+rsource "Kconfig.bitbang"
+
+config HAS_SWDIO
+	bool
+
+module = SWDIO
+module-str = swdio
+source "subsys/logging/Kconfig.template.log_config"
