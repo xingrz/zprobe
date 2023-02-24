@@ -9,7 +9,9 @@ list(APPEND ZEPHYR_EXTRA_MODULES ${CMAKE_SOURCE_DIR}/drivers)
 find_package(Zephyr REQUIRED HINTS ../zephyr)
 project(zprobe)
 
-target_sources(app PRIVATE src/main.c)
-target_sources(app PRIVATE src/usb.c)
+target_sources_ifdef(CONFIG_ZPROBE_BOOTLOADER app PRIVATE src/main_bl.c)
+target_sources_ifdef(CONFIG_ZPROBE_INTERFACE app PRIVATE src/main_if.c)
+
+target_sources(app PRIVATE src/usb_status.c)
 
 target_sources_ifdef(CONFIG_ZPROBE_CDC_ACM app PRIVATE src/usb_cdc_acm.c)

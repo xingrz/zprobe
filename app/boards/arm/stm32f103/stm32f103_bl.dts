@@ -12,5 +12,6 @@
 
 	chosen {
 		zephyr,code-partition = &bootloader_partition;
+		zprobe,boot-partition = &code_partition;
 	};
 };

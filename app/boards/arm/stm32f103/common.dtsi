@@ -13,6 +13,27 @@
 		zephyr,console = &usart3;
 		zephyr,usb-device = &usb;
 	};
+
+	aliases {
+		nreset = &nreset;
+		led-run = &led_run;
+	};
+
+	keys {
+		compatible = "gpio-keys";
+
+		nreset: nreset {
+			gpios = <&gpiob 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		led_run: led_run {
+			gpios = <&gpioc 13 GPIO_ACTIVE_LOW>;
+		};
+	};
 };
 
 &clk_hse {

@@ -5,8 +5,24 @@ mainmenu "Zprobe"
 
 menu "Zprobe"
 
+choice ZPROBE_APP
+	prompt "App"
+
+config ZPROBE_BOOTLOADER
+	bool "Bootloader"
+	select FLASH_MAP
+	select FLASH
+
+config ZPROBE_INTERFACE
+	bool "Interface"
+
+endchoice # ZPROBE_APP
+
 rsource "Kconfig.logging"
+
+if ZPROBE_INTERFACE
 rsource "Kconfig.cdc_acm"
+endif # ZPROBE_INTERFACE
 
 module = ZPROBE
 module-str = zprobe
