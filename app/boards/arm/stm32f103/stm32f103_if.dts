@@ -4,6 +4,8 @@
  */
 
 /dts-v1/;
+#include <dt-bindings/zprobe/hic.h>
+#include <dt-bindings/zprobe/target.h>
 #include "common.dtsi"
 
 / {
@@ -13,6 +15,16 @@
 	chosen {
 		zephyr,code-partition = &code_partition;
 		zprobe,swdio = &swdio;
+		zprobe,board = &board;
+	};
+
+	board: board {
+		compatible = "zprobe,board";
+		board-id = "0000";
+		board-vendor = "Zprobe";
+		board-name = "STM32F103";
+		hic-id = <HIC_ID_STM32F103XB>;
+		family-id = <FAMILY_ID_STUB_HWRESET>;
 	};
 };
 

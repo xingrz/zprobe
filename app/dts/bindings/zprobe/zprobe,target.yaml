@@ -1,0 +1,15 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+description: Zprobe target configuration
+
+compatible: "zprobe,target"
+
+properties:
+  target-vendor:
+    type: string
+    required: true
+
+  target-name:
+    type: string
+    required: true

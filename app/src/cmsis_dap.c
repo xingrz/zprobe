@@ -4,9 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include <stdio.h>
+
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
 #include <zprobe/drivers/swdio.h>
+#include <zephyr/drivers/hwinfo.h>
+
+#include <zephyr/usb/usb_device.h>
+#include <usb_descriptor.h>
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_DECLARE(zprobe, CONFIG_ZPROBE_LOG_LEVEL);
@@ -21,6 +27,16 @@ LOG_MODULE_DECLARE(zprobe, CONFIG_ZPROBE_LOG_LEVEL);
 
 #define LED_RUN_NODE DT_ALIAS(led_run)
 #define LED_RUN_OKAY DT_NODE_HAS_STATUS(LED_RUN_NODE, okay)
+
+#define BOARD_NODE DT_CHOSEN(zprobe_board)
+#define BOARD_OKAY DT_NODE_HAS_STATUS(BOARD_NODE, okay)
+
+#if BOARD_OKAY
+#define TARGET_NODE DT_PHANDLE(BOARD_NODE, target)
+#define TARGET_OKAY DT_NODE_HAS_STATUS(TARGET_NODE, okay)
+#else
+#define TARGET_OKAY 0
+#endif
 
 static const struct device *swdio_dev;
 
@@ -68,6 +84,87 @@ void LED_RUNNING_OUT(uint32_t bit)
 #else
 	ARG_UNUSED(bit);
 #endif
+}
+
+uint8_t DAP_GetTargetDeviceVendorString(char *str)
+{
+#if TARGET_OKAY
+	const char *val = DT_PROP(TARGET_NODE, target_vendor);
+	strcpy(str, val);
+	return strlen(val) + 1;
+#else
+	ARG_UNUSED(str);
+	return 0;
+#endif
+}
+
+uint8_t DAP_GetTargetDeviceNameString(char *str)
+{
+#if TARGET_OKAY
+	const char *val = DT_PROP(TARGET_NODE, target_name);
+	strcpy(str, val);
+	return strlen(val) + 1;
+#else
+	ARG_UNUSED(str);
+	return 0;
+#endif
+}
+
+uint8_t DAP_GetTargetBoardVendorString(char *str)
+{
+#if BOARD_OKAY
+	const char *val = DT_PROP(BOARD_NODE, board_vendor);
+	strcpy(str, val);
+	return strlen(val) + 1;
+#else
+	ARG_UNUSED(str);
+	return 0;
+#endif
+}
+
+uint8_t DAP_GetTargetBoardNameString(char *str)
+{
+#if BOARD_OKAY
+	const char *val = DT_PROP(BOARD_NODE, board_name);
+	strcpy(str, val);
+	return strlen(val) + 1;
+#else
+	ARG_UNUSED(str);
+	return 0;
+#endif
+}
+
+uint8_t *usb_update_sn_string_descriptor(void)
+{
+	static uint8_t sn[] = CONFIG_USB_DEVICE_SN;
+
+#if BOARD_OKAY
+	memcpy(sn + 0, DT_PROP(BOARD_NODE, board_id), 4);
+#endif
+
+#if BOARD_OKAY
+	char family_id_str[5];
+	sprintf(family_id_str, "%04x", DT_PROP(BOARD_NODE, family_id));
+	memcpy(sn + 4, family_id_str, 4);
+#endif
+
+#ifdef CONFIG_HWINFO
+	char host_id_str[33];
+	uint8_t host_id[16];
+	ssize_t host_id_len = hwinfo_get_device_id(host_id, sizeof(host_id));
+	for (int i = 0; i < sizeof(host_id); i++) {
+		sprintf(host_id_str + i * 2, "%02x", i < host_id_len ? host_id[i] : 0xa5);
+	}
+	memcpy(sn + 8, host_id_str, 32);
+#endif
+
+#if BOARD_OKAY
+	char hid_id_str[9];
+	sprintf(hid_id_str, "%08llx", DT_PROP(BOARD_NODE, hic_id));
+	memcpy(sn + 40, hid_id_str, 8);
+#endif
+
+	return sn;
 }
 
 void SWJ_Sequence(uint32_t count, const uint8_t *data)

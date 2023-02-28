@@ -1,0 +1,30 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+description: Zprobe board configuration
+
+compatible: "zprobe,board"
+
+properties:
+  board-id:
+    type: string
+    required: true
+
+  board-vendor:
+    type: string
+    required: true
+
+  board-name:
+    type: string
+    required: true
+
+  hic-id:
+    type: int
+    required: true
+
+  family-id:
+    type: int
+    required: true
+
+  target:
+    type: phandle

@@ -163,6 +163,7 @@ This information includes:
 /// This information is returned by the command \ref DAP_Info as part of <b>Capabilities</b>.
 #define DAP_UART_USB_COM_PORT   1               ///< USB COM Port:  1 = available, 0 = not available.
 
+#ifndef __ZEPHYR__
 /// Debug Unit is connected to fixed Target Device.
 /// The Debug Unit may be part of an evaluation board and always connected to a fixed
 /// known device. In this case a Device Vendor, Device Name, Board Vendor and Board Name strings
@@ -181,6 +182,7 @@ static const char TargetDeviceName   [] = TARGET_DEVICE_NAME;
 static const char TargetBoardVendor  [] = TARGET_BOARD_VENDOR;
 static const char TargetBoardName    [] = TARGET_BOARD_NAME;
 #endif
+#endif // __ZEPHYR__
 
 /** Get Vendor Name string.
 \param str Pointer to buffer to store the string (max 60 characters).
@@ -213,6 +215,9 @@ __STATIC_INLINE uint8_t DAP_GetSerNumString (char *str) {
 \param str Pointer to buffer to store the string (max 60 characters).
 \return String length (including terminating NULL character) or 0 (no string).
 */
+#ifdef __ZEPHYR__
+uint8_t DAP_GetTargetDeviceVendorString (char *str);
+#else // __ZEPHYR__
 __STATIC_INLINE uint8_t DAP_GetTargetDeviceVendorString (char *str) {
 #if TARGET_FIXED != 0
   uint8_t len;
@@ -225,11 +230,15 @@ __STATIC_INLINE uint8_t DAP_GetTargetDeviceVendorString (char *str) {
   return (0U);
 #endif
 }
+#endif // __ZEPHYR__
 
 /** Get Target Device Name string.
 \param str Pointer to buffer to store the string (max 60 characters).
 \return String length (including terminating NULL character) or 0 (no string).
 */
+#ifdef __ZEPHYR__
+uint8_t DAP_GetTargetDeviceNameString (char *str);
+#else // __ZEPHYR__
 __STATIC_INLINE uint8_t DAP_GetTargetDeviceNameString (char *str) {
 #if TARGET_FIXED != 0
   uint8_t len;
@@ -242,11 +251,15 @@ __STATIC_INLINE uint8_t DAP_GetTargetDeviceNameString (char *str) {
   return (0U);
 #endif
 }
+#endif // __ZEPHYR__
 
 /** Get Target Board Vendor string.
 \param str Pointer to buffer to store the string (max 60 characters).
 \return String length (including terminating NULL character) or 0 (no string).
 */
+#ifdef __ZEPHYR__
+uint8_t DAP_GetTargetBoardVendorString (char *str);
+#else // __ZEPHYR__
 __STATIC_INLINE uint8_t DAP_GetTargetBoardVendorString (char *str) {
 #if TARGET_FIXED != 0
   uint8_t len;
@@ -259,11 +272,15 @@ __STATIC_INLINE uint8_t DAP_GetTargetBoardVendorString (char *str) {
   return (0U);
 #endif
 }
+#endif // __ZEPHYR__
 
 /** Get Target Board Name string.
 \param str Pointer to buffer to store the string (max 60 characters).
 \return String length (including terminating NULL character) or 0 (no string).
 */
+#ifdef __ZEPHYR__
+uint8_t DAP_GetTargetBoardNameString (char *str);
+#else // __ZEPHYR__
 __STATIC_INLINE uint8_t DAP_GetTargetBoardNameString (char *str) {
 #if TARGET_FIXED != 0
   uint8_t len;
@@ -276,6 +293,7 @@ __STATIC_INLINE uint8_t DAP_GetTargetBoardNameString (char *str) {
   return (0U);
 #endif
 }
+#endif // __ZEPHYR__
 
 /** Get Product Firmware Version string.
 \param str Pointer to buffer to store the string (max 60 characters).
