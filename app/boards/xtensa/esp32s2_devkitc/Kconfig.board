@@ -1,0 +1,6 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_ESP32S2_DEVKITC_IF
+	bool "Generic ESP32-S2-DevKitC-1 interface"
+	depends on SOC_ESP32S2

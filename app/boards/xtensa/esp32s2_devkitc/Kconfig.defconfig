@@ -1,0 +1,13 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_ESP32S2_DEVKITC_IF
+
+config BOARD
+	default "esp32s2_devkitc_if"
+
+choice ZPROBE_APP
+	default ZPROBE_INTERFACE
+endchoice # ZPROBE_APP
+
+endif # BOARD_ESP32S2_DEVKITC_IF
