@@ -1,0 +1,14 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig USB_DEVICE_DRIVER
+	bool "Additional USB device controller drivers"
+
+if USB_DEVICE_DRIVER
+
+config USB_DC_ESP32SX
+	bool "USB device controller driver for ESP32-SX series"
+	default y
+	depends on DT_HAS_ESPRESSIF_ESP32_USB_ENABLED
+
+endif # USB_DEVICE_DRIVER

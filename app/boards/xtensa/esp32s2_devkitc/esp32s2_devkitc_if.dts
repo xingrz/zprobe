@@ -87,3 +87,17 @@
 		};
 	};
 };
+
+/ {
+	soc {
+		usb: usb@0x60080000 {
+			compatible = "espressif,esp32-usb";
+			reg = <0x60080000 0x00001000>;
+			interrupts = <USB_INTR_SOURCE>;
+			interrupt-parent = <&intc>;
+			num-bidir-endpoints = <7>;
+			num-in-endpoints = <7>;
+			num-out-endpoints = <7>;
+		};
+	};
+};

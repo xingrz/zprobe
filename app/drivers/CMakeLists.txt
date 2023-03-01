@@ -4,3 +4,4 @@
 zephyr_include_directories(${ZEPHYR_CURRENT_MODULE_DIR}/include)
 
 add_subdirectory(swdio)
+add_subdirectory(usb)

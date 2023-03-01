@@ -1,5 +1,4 @@
 # Copyright (c) 2023 XiNGRZ
 # SPDX-License-Identifier: Apache-2.0
 
-rsource "swdio/Kconfig"
-rsource "usb/Kconfig"
+rsource "device/Kconfig"
