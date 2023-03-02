@@ -1,0 +1,24 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_STM32H730_BL
+
+config BOARD
+	default "stm32h730_bl"
+
+choice ZPROBE_APP
+	default ZPROBE_BOOTLOADER
+endchoice # ZPROBE_APP
+
+endif # BOARD_STM32H730_BL
+
+if BOARD_STM32H730_IF
+
+config BOARD
+	default "stm32h730_if"
+
+choice ZPROBE_APP
+	default ZPROBE_INTERFACE
+endchoice # ZPROBE_APP
+
+endif # BOARD_STM32H730_IF

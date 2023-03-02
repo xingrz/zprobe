@@ -1,0 +1,135 @@
+/*
+ * Copyright (c) 2023 XiNGRZ
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <st/h7/stm32h730Xb.dtsi>
+#include <st/h7/stm32h730ibkxq-pinctrl.dtsi>
+#include <dt-bindings/zprobe/hic.h>
+#include <dt-bindings/zprobe/target.h>
+
+/ {
+	model = "STM32H730 Interface";
+	compatible = "zprobe,stm32h730_if", "st,stm32h730";
+
+	chosen {
+		zephyr,sram = &sram0;
+		zephyr,dtcm = &dtcm;
+		zephyr,itcm = &itcm;
+		zephyr,flash = &flash0;
+		zephyr,console = &usart1;
+		zprobe,swdio = &swdio;
+		zprobe,board = &board;
+	};
+
+	aliases {
+		nreset = &nreset;
+		led-run = &led_run;
+	};
+
+	keys {
+		compatible = "gpio-keys";
+
+		nreset: nreset {
+			gpios = <&gpiob 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		led_run: led_run {
+			gpios = <&gpiof 5 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	board: board {
+		compatible = "zprobe,board";
+		board-id = "0000";
+		board-vendor = "Zprobe";
+		board-name = "STM32H730";
+		hic-id = <HIC_ID_STM32F723IE>;
+		family-id = <FAMILY_ID_STUB_HWRESET>;
+	};
+};
+
+&clk_hse {
+	clock-frequency = <DT_FREQ_M(25)>;
+	status = "okay";
+};
+
+&clk_hsi48 {
+	status = "okay";
+};
+
+&clk_lse {
+	status = "okay";
+};
+
+&clk_lsi {
+	status = "okay";
+};
+
+&pll {
+	div-m = <10>;
+	mul-n = <220>;
+	div-p = <1>;
+	div-q = <2>;
+	div-r = <2>;
+	clocks = <&clk_hse>;
+	status = "okay";
+};
+
+&rcc {
+	clocks = <&pll>;
+	clock-frequency = <DT_FREQ_M(550)>;
+	d1cpre = <1>;
+	hpre = <2>;
+	d1ppre = <2>;
+	d2ppre1 = <2>;
+	d2ppre2 = <2>;
+	d3ppre = <2>;
+};
+
+&usbotg_hs {
+	pinctrl-0 = <&usb_otg_hs_dm_pa11 &usb_otg_hs_dp_pa12>;
+	pinctrl-names = "default";
+	status = "okay";
+	maximum-speed = "high-speed";
+
+	cdc0: cdc_acm_uart-0 {
+		compatible = "zephyr,cdc-acm-uart";
+	};
+};
+
+&usart1 {
+	pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
+	pinctrl-names = "default";
+	status = "okay";
+	current-speed = <115200>;
+};
+
+&usart2 {
+	pinctrl-0 = <&usart2_tx_pa2 &usart2_rx_pa3>;
+	pinctrl-names = "default";
+	status = "okay";
+	current-speed = <115200>;
+};
+
+/ {
+	usb_cdc_acm-0 {
+		compatible = "zprobe,usb-cdc-acm";
+		peer-0 = <&cdc0>;
+		peer-1 = <&usart2>;
+	};
+};
+
+/ {
+	swdio: swdio {
+		compatible = "zprobe,swdio-bitbang";
+		swclk-tck-gpios = <&gpiob 13 GPIO_PULL_UP>;
+		swdio-out-gpios = <&gpiob 14 GPIO_PULL_UP>;
+		swdio-in-gpios = <&gpiob 14 GPIO_PULL_UP>;
+	};
+};

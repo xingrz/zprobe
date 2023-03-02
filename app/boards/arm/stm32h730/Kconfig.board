@@ -1,0 +1,10 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_STM32H730_BL
+	bool "Generic STM32H730 bootloader"
+	depends on SOC_STM32H730XXQ
+
+config BOARD_STM32H730_IF
+	bool "Generic STM32H730 interface"
+	depends on SOC_STM32H730XXQ
