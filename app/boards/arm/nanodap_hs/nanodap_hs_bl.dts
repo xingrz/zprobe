@@ -1,0 +1,17 @@
+/*
+ * Copyright (c) 2023 XiNGRZ
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include "common.dtsi"
+
+/ {
+	model = "MuseLab nanoDAP-HS bootloader";
+	compatible = "muselab,nanodap_hs_bl", "atmel,sam3u2c", "atmel,sam3u";
+
+	chosen {
+		zephyr,code-partition = &bootloader_partition;
+		zprobe,boot-partition = &code_partition;
+	};
+};

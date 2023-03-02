@@ -1,0 +1,106 @@
+/*
+ * Copyright (c) 2023 XiNGRZ
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <mem.h>
+#include <freq.h>
+
+#include <atmel/sam3u2c.dtsi>
+#include <dt-bindings/pinctrl/sam3uXc-pinctrl.h>
+#include <zephyr/dt-bindings/gpio/gpio.h>
+
+/ {
+	chosen {
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,console = &uart;
+	};
+
+	aliases {
+		nreset = &nreset;
+		led-con = &led_con;
+		led-run = &led_run;
+	};
+
+	keys {
+		compatible = "gpio-keys";
+
+		nreset: nreset {
+			gpios = <&pioa 25 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		led_con: led_con {
+			gpios = <&pioa 29 GPIO_ACTIVE_LOW>;
+		};
+
+		led_run: led_run {
+			gpios = <&pioa 28 GPIO_ACTIVE_LOW>;
+		};
+	};
+};
+
+&cpu0 {
+	clock-frequency = <DT_FREQ_M(96)>;
+};
+
+&wdt {
+	status = "okay";
+};
+
+&pinctrl {
+	uart_default: uart_default {
+		group1 {
+			pinmux = <PA11A_UART_URXD>;
+			bias-pull-up;
+		};
+		group2 {
+			pinmux = <PA12A_UART_UTXD>;
+		};
+	};
+};
+
+&pioa {
+	status = "okay";
+};
+
+&piob {
+	status = "okay";
+};
+
+&usb {
+	status = "okay";
+};
+
+&uart {
+	pinctrl-0 = <&uart_default>;
+	pinctrl-names = "default";
+	status = "okay";
+	current-speed = <115200>;
+};
+
+&efc0 {
+	status = "okay";
+};
+
+&flash0 {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		bootloader_partition: partition@0 {
+			label = "bootloader";
+			reg = <0x00000000 DT_SIZE_K(32)>;
+		};
+
+		code_partition: partition@8000 {
+			label = "code_partition";
+			reg = <0x00008000 DT_SIZE_K(96)>;
+		};
+	};
+};

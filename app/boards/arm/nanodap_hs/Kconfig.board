@@ -1,0 +1,10 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_NANODAP_HS_BL
+	bool "MuseLab nanoDAP-HS bootloader"
+	depends on SOC_PART_NUMBER_SAM3U2C
+
+config BOARD_NANODAP_HS_IF
+	bool "MuseLab nanoDAP-HS interface"
+	depends on SOC_PART_NUMBER_SAM3U2C
