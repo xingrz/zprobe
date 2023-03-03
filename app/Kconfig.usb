@@ -1,0 +1,34 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+menu "USB"
+	depends on USB_DEVICE_STACK
+
+if USB_DEVICE_STACK
+
+config USB_DEVICE_VID
+	default 0x0d28
+
+config USB_DEVICE_PID
+	default 0x0204
+
+config USB_DEVICE_MANUFACTURER
+	default "XiNGRZ"
+
+config USB_DEVICE_PRODUCT
+	default "Zprobe CMSIS-DAP"
+
+config USB_DEVICE_SN
+	default "000000000000000000000000000000000000000000000000"
+
+config USB_COMPOSITE_DEVICE
+	default y
+
+endif # USB_DEVICE_STACK
+
+if ZPROBE_INTERFACE
+rsource "Kconfig.usb.cdc_acm"
+rsource "Kconfig.usb.cmsis_dap"
+endif # ZPROBE_INTERFACE
+
+endmenu

@@ -19,10 +19,9 @@ config ZPROBE_INTERFACE
 endchoice # ZPROBE_APP
 
 rsource "Kconfig.logging"
+rsource "Kconfig.usb"
 
 if ZPROBE_INTERFACE
-rsource "Kconfig.cdc_acm"
-rsource "Kconfig.cmsis_dap"
 rsource "cmsis_dap/Kconfig"
 endif # ZPROBE_INTERFACE
 

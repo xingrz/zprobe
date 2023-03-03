@@ -8,7 +8,6 @@
 #include <zephyr/device.h>
 
 #include <zephyr/drivers/timer/system_timer.h>
-#include <zephyr/usb/usb_device.h>
 #include <zephyr/linker/linker-defs.h>
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
 
