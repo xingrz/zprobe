@@ -116,8 +116,34 @@ static void dap_v2_status_cb(struct usb_cfg_data *cfg, enum usb_dc_status_code s
 	}
 }
 
+struct dap_v2_interface_descriptor {
+	uint8_t bLength;
+	uint8_t bDescriptorType;
+	uint8_t bString[USB_BSTRING_LENGTH(CONFIG_USB_DEVICE_PRODUCT)];
+} __packed;
+
+USBD_STRING_DESCR_USER_DEFINE(primary)
+struct dap_v2_interface_descriptor dap_v2_interface_descr = {
+	.bLength = USB_STRING_DESCRIPTOR_LENGTH(CONFIG_USB_DEVICE_PRODUCT),
+	.bDescriptorType = USB_DESC_STRING,
+	.bString = CONFIG_USB_DEVICE_PRODUCT,
+};
+
+static void dap_v2_interface_config(struct usb_desc_header *head, uint8_t bInterfaceNumber)
+{
+	ARG_UNUSED(head);
+
+	int idx = usb_get_str_descriptor_idx(&dap_v2_interface_descr);
+	if (idx) {
+		dap_v2_desc.if0.iInterface = idx;
+	}
+
+	dap_v2_desc.if0.bInterfaceNumber = bInterfaceNumber;
+}
+
 USBD_DEFINE_CFG_DATA(dap_v2_config) = {
 	.usb_device_description = NULL,
+	.interface_config = dap_v2_interface_config,
 	.interface_descriptor = &dap_v2_desc.if0,
 	.cb_usb_status = dap_v2_status_cb,
 	.num_endpoints = ARRAY_SIZE(dap_v2_ep_data),
