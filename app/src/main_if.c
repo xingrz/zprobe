@@ -13,6 +13,15 @@ LOG_MODULE_REGISTER(zprobe, CONFIG_ZPROBE_LOG_LEVEL);
 
 #include "usb_status.h"
 
+#include <zephyr/device.h>
+#include <zephyr/drivers/gpio.h>
+
+#define LED_RUN_NODE DT_ALIAS(led_run)
+#define LED_CON_NODE DT_ALIAS(led_con)
+
+static struct gpio_dt_spec led_run = GPIO_DT_SPEC_GET(LED_RUN_NODE, gpios);
+static struct gpio_dt_spec led_con = GPIO_DT_SPEC_GET(LED_CON_NODE, gpios);
+
 void main(void)
 {
 	int ret;
@@ -27,4 +36,13 @@ void main(void)
 #endif // CONFIG_USB_DEVICE_STACK
 
 	LOG_INF("Hello world!");
+
+	gpio_pin_configure_dt(&led_run, GPIO_OUTPUT_INACTIVE);
+	gpio_pin_configure_dt(&led_con, GPIO_OUTPUT_ACTIVE);
+
+	while (1) {
+		gpio_pin_toggle_dt(&led_run);
+		gpio_pin_toggle_dt(&led_con);
+		k_msleep(1000);
+	}
 }
