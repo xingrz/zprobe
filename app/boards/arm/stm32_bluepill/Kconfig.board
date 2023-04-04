@@ -1,0 +1,10 @@
+# Copyright (c) 2023 XiNGRZ
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_STM32_BLUEPILL_BL
+	bool "STM32 BluePill Bootloader"
+	depends on SOC_STM32F103XB
+
+config BOARD_STM32_BLUEPILL_IF
+	bool "STM32 BluePill Interface"
+	depends on SOC_STM32F103XB

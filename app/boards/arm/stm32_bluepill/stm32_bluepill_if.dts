@@ -6,11 +6,11 @@
 /dts-v1/;
 #include <dt-bindings/zprobe/hic.h>
 #include <dt-bindings/zprobe/target.h>
-#include "common.dtsi"
+#include "stm32_bluepill.dtsi"
 
 / {
-	model = "STM32F103 Interface";
-	compatible = "zprobe,stm32f103_if", "st,stm32f103";
+	model = "STM32 BluePill Interface";
+	compatible = "zprobe,stm32_bluepill_if", "st,stm32f103";
 
 	chosen {
 		zephyr,code-partition = &code_partition;

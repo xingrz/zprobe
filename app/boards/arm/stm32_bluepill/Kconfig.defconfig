@@ -1,24 +1,24 @@
 # Copyright (c) 2023 XiNGRZ
 # SPDX-License-Identifier: Apache-2.0
 
-if BOARD_STM32F103_BL
+if BOARD_STM32_BLUEPILL_BL
 
 config BOARD
-	default "stm32f103_bl"
+	default "stm32_bluepill_bl"
 
 choice ZPROBE_APP
 	default ZPROBE_BOOTLOADER
 endchoice # ZPROBE_APP
 
-endif # BOARD_STM32F103_BL
+endif # BOARD_STM32_BLUEPILL_BL
 
-if BOARD_STM32F103_IF
+if BOARD_STM32_BLUEPILL_IF
 
 config BOARD
-	default "stm32f103_if"
+	default "stm32_bluepill_if"
 
 choice ZPROBE_APP
 	default ZPROBE_INTERFACE
 endchoice # ZPROBE_APP
 
-endif # BOARD_STM32F103_IF
+endif # BOARD_STM32_BLUEPILL_IF
